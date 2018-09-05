@@ -9,12 +9,13 @@ GAME RULES:
 
 */
 
-var score, roundScore, activePlayer;
+var score, roundScore, activePlayer, gamePlaying;
 
 
 //use anonymous function bc it will only be used in here 
 document.querySelector('.btn-roll').addEventListener('click', function(){
-    //1.Roll the dice
+    if (gamePlaying){
+         //1.Roll the dice
     //set the dice from one to six
     var dice = Math.floor(Math.random() * 6) + 1;
     //2.Display the result
@@ -32,12 +33,12 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         //Next player
         nextPlayer();
     }
-    
-    
+} 
 });
 
 document.querySelector('.btn-hold').addEventListener('click', function(){
-    // Add current score to global score
+    if (gamePlaying){
+        // Add current score to global score
     score[activePlayer] += roundScore;
     //Update the UI
     document.querySelector('#score-' + activePlayer).textContent = score[activePlayer];
@@ -48,9 +49,11 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
         document.querySelector('.dice').style.display = 'none';
         document.querySelector('.player-' + activePlayer +'-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer +'-panel').classList.remove('active');
+        gamePlaying = false;
     }else{
         nextPlayer();
-    }
+}
+   }
 })
 
 //define function to not repeat out code
@@ -73,6 +76,7 @@ document.querySelector('.btn-new').addEventListener('click',init);
      score = [0,0];
      roundScore = 0;
      activePlayer = 0; 
+     gamePlaying = true;
      //set everything 0 by default
        document.querySelector('.dice').style.display = 'none';
        document.getElementById('score-0').textContent = 0;
