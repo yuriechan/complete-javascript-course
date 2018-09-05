@@ -9,18 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer;
-//set scores zero for 2 players
-score = [0,0];
-roundScore = 0;
-activePlayer = 0;
-
-//set everything 0 by default
-document.querySelector('.dice').style.display = 'none';
-document.getElementById('score-0').textContent = 0;
-document.getElementById('score-1').textContent = 0;
-document.getElementById('current-0').textContent = 0;
-document.getElementById('current-1').textContent = 0;
+var score, roundScore, activePlayer;
 
 
 //use anonymous function bc it will only be used in here 
@@ -49,15 +38,15 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
 
 document.querySelector('.btn-hold').addEventListener('click', function(){
     // Add current score to global score
-    scores[activePlayer] += roundScore;
+    score[activePlayer] += roundScore;
     //Update the UI
-    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    document.querySelector('#score-' + activePlayer).textContent = score[activePlayer];
     
     //Check if player won the game
-    if (scores[activePlayer] >= 20){
+    if (score[activePlayer] >= 20){
         document.querySelector('#name-'+ activePlayer).textContent = 'Winner!';
         document.querySelector('.dice').style.display = 'none';
-        document.querySelector('.player-' + activePlayer +'-panel').classList.add.('winner');
+        document.querySelector('.player-' + activePlayer +'-panel').classList.add('winner');
         document.querySelector('.player-' + activePlayer +'-panel').classList.remove('active');
     }else{
         nextPlayer();
@@ -75,6 +64,28 @@ function nextPlayer (){
         document.querySelector('.player-1-panel').classList.toggle('active');
         
         document.querySelector('.dice').style.display = 'none';
+}
+
+//why not pass but just call??
+document.querySelector('.btn-new').addEventListener('click',init);
+//set scores zero for 2 players
+   function init(){
+     score = [0,0];
+     roundScore = 0;
+     activePlayer = 0; 
+     //set everything 0 by default
+       document.querySelector('.dice').style.display = 'none';
+       document.getElementById('score-0').textContent = 0;
+       document.getElementById('score-1').textContent = 0;
+       document.getElementById('current-0').textContent = 0;
+       document.getElementById('current-1').textContent = 0;
+       document.getElementById('name-0').textContent = 'Player 1';
+       document.getElementById('name-1').textContent = 'Player 2';
+       document.querySelector('.player-0-panel').classList.remove('winner');
+       document.querySelector('.player-1-panel').classList.remove('winner');
+       document.querySelector('.player-0-panel').classList.remove('active');
+       document.querySelector('.player-1-panel').classList.remove('active');
+       document.querySelector('.player-0-panel').classList.add('active');
 }
 
 
